@@ -14,9 +14,20 @@
 #include "turing_machine.h"
 #include <unity.h> 
 #include <stdint.h>
+#include <stdlib.h>
+#include <time.h>
 
 uint32_t random_function(uint32_t min, uint32_t max) {
-    return max-min;
+    srand((unsigned) time(NULL));
+    return (rand() % (max-min)) + min;
+};
+
+uint32_t non_random_function_min(uint32_t min, uint32_t max) {
+    return min;
+};
+
+uint32_t non_random_function_max(uint32_t min, uint32_t max) {
+    return max;
 };
 
 TuringMachine turing_machine(random_function, 0b0, 0, 0);
@@ -53,24 +64,57 @@ void test_function_length(void) {
 void test_function_probability_100(void) {
     turing_machine.setProbability(100);
     turing_machine.Cycle();
-    TEST_ASSERT_EQUAL(turing_machine.getRegister(), 0b0011100011100111);
+    TEST_ASSERT_EQUAL(0b0011100011100111, turing_machine.getRegister());
     turing_machine.Cycle();
-    TEST_ASSERT_EQUAL(turing_machine.getRegister(), 0b0111000111001111);
+    TEST_ASSERT_EQUAL(0b0111000111001111, turing_machine.getRegister());
     turing_machine.Cycle();
-    TEST_ASSERT_EQUAL(turing_machine.getRegister(), 0b1110001110011111);
+    TEST_ASSERT_EQUAL(0b1110001110011111, turing_machine.getRegister());
     turing_machine.Cycle();
-    TEST_ASSERT_EQUAL(turing_machine.getRegister(), 0b1100011100111110);
+    TEST_ASSERT_EQUAL(0b1100011100111110, turing_machine.getRegister());
     turing_machine.Cycle();
-    TEST_ASSERT_EQUAL(turing_machine.getRegister(), 0b1000111001111100);
+    TEST_ASSERT_EQUAL(0b1000111001111100, turing_machine.getRegister());
 }
-void test_function_probability_50(void) {
+
+void test_function_set_probability_50(void) {
+    turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 0);
     turing_machine.setProbability(50);
     turing_machine.Cycle();
-    TEST_ASSERT_EQUAL(0b0011100011100110, turing_machine.getRegister() & 0b1111111111111110);
+    TEST_ASSERT_EQUAL(0b0110011001100111, turing_machine.getRegister());
     turing_machine.Cycle();
-    TEST_ASSERT_EQUAL(0b0111000111001100, turing_machine.getRegister() & 0b1111111111111100);
+    TEST_ASSERT_EQUAL(0b1100110011001111, turing_machine.getRegister());
     turing_machine.Cycle();
-    TEST_ASSERT_EQUAL(0b1110001110011000, turing_machine.getRegister() & 0b1111111111111000);
+    TEST_ASSERT_EQUAL(0b1001100110011110, turing_machine.getRegister());
+}
+
+void test_function_probability_50(void) {
+    turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 50);
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b0110011001100111, turing_machine.getRegister());
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b1100110011001111, turing_machine.getRegister());
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b1001100110011110, turing_machine.getRegister());
+}
+
+void test_function_set_probability_0(void) {
+    turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 0);
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b0110011001100110, turing_machine.getRegister());
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b1100110011001100, turing_machine.getRegister());
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b1001100110011001, turing_machine.getRegister());
+}
+
+void test_function_probability_0(void) {
+    turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 50);
+    turing_machine.setProbability(0);
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b0110011001100110, turing_machine.getRegister());
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b1100110011001100, turing_machine.getRegister());
+    turing_machine.Cycle();
+    TEST_ASSERT_EQUAL(0b1001100110011001, turing_machine.getRegister());
 }
 
 int main(int argc, char **argv) {
@@ -79,7 +123,9 @@ int main(int argc, char **argv) {
     RUN_TEST(test_function_cycle);
     RUN_TEST(test_function_length);
     RUN_TEST(test_function_probability_100);
-    RUN_TEST(test_function_probability_50);
+    RUN_TEST(test_function_set_probability_50);
+    RUN_TEST(test_function_set_probability_0);
+    RUN_TEST(test_function_probability_0);
     UNITY_END();
     return 0;
 }
