@@ -10,7 +10,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 **/
+#ifndef _TEST_TURING_MACHINE_C_
+#define _TEST_TURING_MACHINE_C_
 
+#include "unittest_turing_machine.h"
 #include "turing_machine.h"
 #include <unity.h> 
 #include <stdint.h>
@@ -32,20 +35,23 @@ uint32_t non_random_function_max(uint32_t min, uint32_t max) {
 
 TuringMachine turing_machine(random_function, 0b0, 0, 0);
 
-void setUp(void) {
+void beforeEach(void) {
     turing_machine = TuringMachine(random_function, 0b0001110001110011, 16, 0);
 }
 
 void test_function_get_register(void) {
+    beforeEach();
     TEST_ASSERT_EQUAL(turing_machine.getRegister(), 0b0001110001110011);
 }
 
 void test_function_cycle(void) {
+    beforeEach();
     turing_machine.Cycle();
     TEST_ASSERT_EQUAL(turing_machine.getRegister(), 0b0011100011100110);
 }
 
 void test_function_length(void) {
+    beforeEach();
     turing_machine.setLength(3);
     TEST_ASSERT_EQUAL(turing_machine.getRegister(), 0b0001110001110011);
     turing_machine.Cycle();
@@ -62,6 +68,7 @@ void test_function_length(void) {
 }
 
 void test_function_probability_100(void) {
+    beforeEach();
     turing_machine.setProbability(100);
     turing_machine.Cycle();
     TEST_ASSERT_EQUAL(0b0011100011100111, turing_machine.getRegister());
@@ -76,6 +83,7 @@ void test_function_probability_100(void) {
 }
 
 void test_function_set_probability_50(void) {
+    beforeEach();
     turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 0);
     turing_machine.setProbability(50);
     turing_machine.Cycle();
@@ -87,6 +95,7 @@ void test_function_set_probability_50(void) {
 }
 
 void test_function_probability_50(void) {
+    beforeEach();
     turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 50);
     turing_machine.Cycle();
     TEST_ASSERT_EQUAL(0b0110011001100111, turing_machine.getRegister());
@@ -97,6 +106,7 @@ void test_function_probability_50(void) {
 }
 
 void test_function_set_probability_0(void) {
+    beforeEach();
     turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 0);
     turing_machine.Cycle();
     TEST_ASSERT_EQUAL(0b0110011001100110, turing_machine.getRegister());
@@ -107,6 +117,7 @@ void test_function_set_probability_0(void) {
 }
 
 void test_function_probability_0(void) {
+    beforeEach();
     turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 50);
     turing_machine.setProbability(0);
     turing_machine.Cycle();
@@ -117,15 +128,4 @@ void test_function_probability_0(void) {
     TEST_ASSERT_EQUAL(0b1001100110011001, turing_machine.getRegister());
 }
 
-int main(int argc, char **argv) {
-    UNITY_BEGIN();
-    RUN_TEST(test_function_get_register);
-    RUN_TEST(test_function_cycle);
-    RUN_TEST(test_function_length);
-    RUN_TEST(test_function_probability_100);
-    RUN_TEST(test_function_set_probability_50);
-    RUN_TEST(test_function_set_probability_0);
-    RUN_TEST(test_function_probability_0);
-    UNITY_END();
-    return 0;
-}
+#endif // _TEST_TURING_MACHINE_C_
