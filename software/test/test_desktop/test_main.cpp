@@ -2,6 +2,7 @@
 #include "unittest_turing_machine.h"
 #include "unittest_sample_and_hold.h"
 #include "unittest_switch.h"
+#include "unittest_clock_div.h"
 
 int main(int argc, char **argv) {
     UNITY_BEGIN();
@@ -25,6 +26,10 @@ int main(int argc, char **argv) {
     RUN_TEST(test_function_sample_returns_value);
     RUN_TEST(test_function_get_value_same_until_sample);
     RUN_TEST(test_function_initial_value_is_sampled);
+
+    // Clock Div
+    RUN_TEST(test_function_clock);
+    RUN_TEST(test_function_change_division);
 
     UNITY_END();
     return 0;
