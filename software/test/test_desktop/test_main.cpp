@@ -7,9 +7,15 @@
 int main(int argc, char **argv) {
     UNITY_BEGIN();
 
+<<<<<<< 2d0524a68f6029791ba610b7dd21b1a33dd6d2b0
     // Switch
     RUN_TEST(test_function_set_channel);
     RUN_TEST(test_function_update_inputs);
+=======
+    // Clock Div
+    RUN_TEST(test_function_clock);
+    RUN_TEST(test_function_change_division);
+>>>>>>> Reorder
 
     // Turing Machine
     RUN_TEST(test_function_get_register);
@@ -26,10 +32,6 @@ int main(int argc, char **argv) {
     RUN_TEST(test_function_sample_returns_value);
     RUN_TEST(test_function_get_value_same_until_sample);
     RUN_TEST(test_function_initial_value_is_sampled);
-
-    // Clock Div
-    RUN_TEST(test_function_clock);
-    RUN_TEST(test_function_change_division);
 
     UNITY_END();
     return 0;

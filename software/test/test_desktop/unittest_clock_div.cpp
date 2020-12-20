@@ -13,7 +13,8 @@
 #ifndef _TEST_CLOCK_DIV_C_
 #define _TEST_CLOCK_DIV_C_
 
-#include <unity.h> 
+#include <unity.h>
+#include <stdint.h> 
 
 #include "unittest_clock_div.h"
 #include "clock_div.h"
