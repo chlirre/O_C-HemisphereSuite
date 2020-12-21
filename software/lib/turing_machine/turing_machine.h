@@ -48,6 +48,8 @@ class TuringMachine {
         void setLength(uint8_t _length);
         void setProbability(uint8_t _probability);
         uint16_t getRegister();
+        double getScaled5BitValue();
+        double getScaled8BitValue();
         void Cycle();
 
     private:

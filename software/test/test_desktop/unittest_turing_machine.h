@@ -21,5 +21,6 @@ void test_function_set_probability_50(void);
 void test_function_probability_50(void);
 void test_function_set_probability_0(void);
 void test_function_probability_0(void);
+void test_function_scaled_values(void);
 
 #endif // _TEST_TURING_MACHINE_H_
