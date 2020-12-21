@@ -128,4 +128,20 @@ void test_function_probability_0(void) {
     TEST_ASSERT_EQUAL(0b1001100110011001, turing_machine.getRegister());
 }
 
+void test_function_scaled_values() {
+    beforeEach();
+    turing_machine = TuringMachine(non_random_function_min, 0b0011001100110011, 16, 0);
+    TEST_ASSERT_EQUAL(19/31, turing_machine.getScaled5BitValue());
+    TEST_ASSERT_EQUAL(51/255, turing_machine.getScaled8BitValue());
+    turing_machine = TuringMachine(non_random_function_min, 0b0011001111110000, 16, 0);
+    TEST_ASSERT_EQUAL(16/31, turing_machine.getScaled5BitValue());
+    TEST_ASSERT_EQUAL(240/255, turing_machine.getScaled8BitValue());
+    turing_machine = TuringMachine(non_random_function_min, 0b0011001111111111, 16, 0);
+    TEST_ASSERT_EQUAL(31/31, turing_machine.getScaled5BitValue());
+    TEST_ASSERT_EQUAL(255/255, turing_machine.getScaled8BitValue());
+    turing_machine = TuringMachine(non_random_function_min, 0b0011001100000000, 16, 0);
+    TEST_ASSERT_EQUAL(0/31, turing_machine.getScaled5BitValue());
+    TEST_ASSERT_EQUAL(0/255, turing_machine.getScaled8BitValue());
+}
+
 #endif // _TEST_TURING_MACHINE_C_

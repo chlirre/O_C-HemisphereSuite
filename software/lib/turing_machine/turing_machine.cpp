@@ -82,6 +82,14 @@ uint16_t TuringMachine::TuringMachine::getRegister() {
     return reg;
 }
 
+double TuringMachine::TuringMachine::getScaled5BitValue() {
+    return (reg & 0b0000000000011111) / 0b00011111;
+}
+
+double TuringMachine::TuringMachine::getScaled8BitValue() {
+    return (reg & 0b0000000011111111) / 0b11111111;
+}
+
 void TuringMachine::TuringMachine::Cycle() {
     // Grab the bit that's about to be shifted away
     int last = (reg >> (length - 1)) & 0x01;
