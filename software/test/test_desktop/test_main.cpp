@@ -1,9 +1,14 @@
 #include <unity.h> 
 #include "unittest_turing_machine.h"
 #include "unittest_sample_and_hold.h"
+#include "unittest_switch.h"
 
 int main(int argc, char **argv) {
     UNITY_BEGIN();
+
+    // Switch
+    RUN_TEST(test_function_set_channel);
+    RUN_TEST(test_function_update_inputs);
 
     // Turing Machine
     RUN_TEST(test_function_get_register);
