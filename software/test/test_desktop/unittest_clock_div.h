@@ -10,17 +10,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 **/
-#ifndef _TEST_TURING_MACHINE_H_
-#define _TEST_TURING_MACHINE_H_
+#ifndef _TEST_CLOCK_DIV_H_
+#define _TEST_CLOCK_DIV_H_
 
-void test_function_get_register(void);
-void test_function_cycle(void);
-void test_function_length(void);
-void test_function_probability_100(void);
-void test_function_set_probability_50(void);
-void test_function_probability_50(void);
-void test_function_set_probability_0(void);
-void test_function_probability_0(void);
-void test_function_scaled_values(void);
+void test_function_clock(void);
+void test_function_change_division(void);
 
-#endif // _TEST_TURING_MACHINE_H_
+#endif // _TEST_CLOCK_DIV_H_
