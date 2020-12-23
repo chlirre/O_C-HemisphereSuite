@@ -34,7 +34,6 @@ int main(int argc, char **argv) {
     RUN_TEST(test_function_set_probability_50);
     RUN_TEST(test_function_set_probability_0);
     RUN_TEST(test_function_probability_0);
-    RUN_TEST(test_function_scaled_values);
 
     // Sample n Hold
     RUN_TEST(test_function_get_value);

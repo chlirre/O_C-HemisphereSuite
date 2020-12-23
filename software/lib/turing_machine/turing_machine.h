@@ -65,6 +65,7 @@ class TuringMachine: public Clockable {
         double* scaledEightBitOut;
         uint8_t getLength();
         uint8_t getProbability();
+        void updateOutput();
 };
 
 #endif //#TURING_MACHINE_H_
