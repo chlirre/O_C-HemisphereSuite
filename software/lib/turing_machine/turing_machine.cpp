@@ -40,65 +40,50 @@ const uint8_t MAX_LENGTH = 16;
 const uint8_t MIN_PROB = 0;
 const uint8_t MAX_PROB = 100;
 
-TuringMachine::TuringMachine(random_fn _random, uint32_t _reg, uint8_t _length, uint8_t _probability) {
-    init(_random, _reg, _length, _probability);
-}
-
-TuringMachine::TuringMachine(random_fn _random, uint8_t _length, uint8_t _probability) {
-    init(_random, _random(0, 65535), _length, _probability);
-}
-
-void TuringMachine::TuringMachine::init(random_fn _random, uint32_t _reg, uint8_t _length, uint8_t _probability) {
-    random = _random;
-    reg = _reg;
-    setLength(_length);
-    setProbability(_probability);
-}
+TuringMachine::TuringMachine(
+    random_fn _random, 
+    uint16_t initial_reg, 
+    uint8_t* _length, 
+    uint8_t* _probability,
+    double* _scaledFiveBitOut,
+    double* _scaledEightBitOut
+) : random(_random), reg(initial_reg), length(_length), probability(_probability), scaledFiveBitOut(_scaledFiveBitOut), scaledEightBitOut(_scaledEightBitOut) {}
     
-void TuringMachine::TuringMachine::setLength(uint8_t _length) {
+uint8_t TuringMachine::TuringMachine::getLength() {
+    uint8_t _length = *length;
     if (_length < MIN_LENGTH) {
-        length = MIN_LENGTH;
-        return;
+        _length = MIN_LENGTH;
     }    
     if (_length > MAX_LENGTH) {
-        length = MAX_LENGTH;
-        return;
+        _length = MAX_LENGTH;
     }
-    length = _length;
+    return _length;
 }
-void TuringMachine::TuringMachine::setProbability(uint8_t _probability) {
+
+uint8_t TuringMachine::TuringMachine::getProbability() {
+    uint8_t _probability = *probability;
     if (_probability < MIN_PROB) {
-        probability = MIN_PROB;
-        return;
+        _probability = MIN_PROB;
     }    
     if (_probability > MAX_PROB) {
-        probability = MAX_PROB;
-        return;
+        _probability = MAX_PROB;
     }
-    probability = _probability;
+    return _probability;
 }
 
-uint16_t TuringMachine::TuringMachine::getRegister() {
-    return reg;
-}
-
-double TuringMachine::TuringMachine::getScaled5BitValue() {
-    return (reg & 0b0000000000011111) / 0b00011111;
-}
-
-double TuringMachine::TuringMachine::getScaled8BitValue() {
-    return (reg & 0b0000000011111111) / 0b11111111;
-}
-
-void TuringMachine::TuringMachine::Cycle() {
+void TuringMachine::TuringMachine::clock() {
+    uint8_t _length = getLength();
+    uint8_t _probability = getProbability();
     // Grab the bit that's about to be shifted away
-    int last = (reg >> (length - 1)) & 0x01;
+    int last = (reg >> (_length - 1)) & 0x01;
 
-    // Does it change?
-    if (random(0, 99) < probability) last = 1 - last;
+    // Decide what the last bit should be
+    if (random(0, 99) < _probability) last = 1 - last;
 
-    // Shift left, then potentially add the bit from the other side
+    // Shift left, then add the new last bit
     reg = (reg << 1) + last;
+    *scaledFiveBitOut = (reg & 0b0000000000011111) / 0b00011111;
+    *scaledEightBitOut = (reg & 0b0000000011111111) / 0b11111111;
 }
 
 #endif //#TURING_MACHINE_C_

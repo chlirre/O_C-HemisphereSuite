@@ -33,6 +33,7 @@
 #define TURING_MACHINE_H_
 
 #include <stdint.h>
+#include "clockable.h"
 
 static const uint8_t DEFAULT_LENGTH = 16;
 static const uint8_t DEFAULT_PROBABILITY = 0;
@@ -40,24 +41,30 @@ static const uint8_t DEFAULT_PROBABILITY = 0;
 typedef uint32_t (*random_fn)(uint32_t min, uint32_t max);
 
 
-class TuringMachine {
+class TuringMachine: public Clockable {
     
     public: 
-        TuringMachine(random_fn _random, uint32_t _reg, uint8_t _length = DEFAULT_LENGTH, uint8_t _probability = DEFAULT_PROBABILITY);
-        TuringMachine(random_fn _random, uint8_t _length = DEFAULT_LENGTH, uint8_t _probability = DEFAULT_PROBABILITY);
-        void setLength(uint8_t _length);
-        void setProbability(uint8_t _probability);
-        uint16_t getRegister();
-        double getScaled5BitValue();
-        double getScaled8BitValue();
-        void Cycle();
+        TuringMachine(
+            random_fn _random, 
+            uint16_t initial_reg, 
+            uint8_t* _length, 
+            uint8_t* _probability, 
+            double* _scaledFiveBitOut,
+            double* _scaledEightBitOut
+        );
+        void clock();
+        const uint16_t DEFAULT_LENGTH = 16;
+        const uint16_t DEFAULT_PROBABILITY = 0;
 
     private:
-        void init(random_fn _random, uint32_t _reg, uint8_t _length, uint8_t _probability);
         uint16_t reg;
-        uint8_t length;
-        uint8_t probability;
+        uint8_t* length;
+        uint8_t* probability;
         random_fn random;
+        double* scaledFiveBitOut;
+        double* scaledEightBitOut;
+        uint8_t getLength();
+        uint8_t getProbability();
 };
 
 #endif //#TURING_MACHINE_H_
