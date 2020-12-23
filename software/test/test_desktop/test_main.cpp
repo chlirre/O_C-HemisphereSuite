@@ -1,6 +1,7 @@
 #include <unity.h> 
 #include "unittest_turing_machine.h"
 #include "unittest_sample_and_hold.h"
+#include "unittest_euclid_pattern.h"
 #include "unittest_switch.h"
 #include "unittest_clock_div.h"
 
@@ -14,6 +15,16 @@ int main(int argc, char **argv) {
     // Clock Div
     RUN_TEST(test_function_clock);
     RUN_TEST(test_function_change_division);
+
+    // Euclid
+    RUN_TEST(test_function_euclid_clock);
+    RUN_TEST(test_function_total_steps);
+    RUN_TEST(test_function_update_steps);
+    RUN_TEST(test_function_euclid_rotated);
+    RUN_TEST(test_function_update_length);
+    RUN_TEST(test_function_zero_steps);
+    RUN_TEST(test_function_length_above_length);
+    RUN_TEST(test_function_zero_length);
 
     // Turing Machine
     RUN_TEST(test_function_get_register);
