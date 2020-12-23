@@ -18,22 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef CLOCK_DIV_C_
-#define CLOCK_DIV_C_
+#ifndef CLOCKABLE_H_
+#define CLOCKABLE_H_
 
-#include <stdint.h>
-#include "clock_div.h"
-#include "clockable.h"
+class Clockable {
+   public:
+      virtual void clock() = 0;
+};
 
-ClockDiv::ClockDiv(uint8_t &_division, Clockable &_clockable)
-: division(_division), clockable(_clockable) {}
-
-void ClockDiv::ClockDiv::clock() {
-    counter++;
-    if (counter % division == 0) {
-        counter = 0;
-        clockable.clock();
-    }
-}
-
-#endif //CLOCK_DIV_C_
+#endif

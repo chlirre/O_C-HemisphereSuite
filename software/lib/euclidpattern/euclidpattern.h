@@ -18,22 +18,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef CLOCK_DIV_C_
-#define CLOCK_DIV_C_
+
+#ifndef EUCLID_PATTERN_H_
+#define EUCLID_PATTERN_H_
 
 #include <stdint.h>
-#include "clock_div.h"
 #include "clockable.h"
 
-ClockDiv::ClockDiv(uint8_t &_division, Clockable &_clockable)
-: division(_division), clockable(_clockable) {}
-
-void ClockDiv::ClockDiv::clock() {
-    counter++;
-    if (counter % division == 0) {
-        counter = 0;
-        clockable.clock();
-    }
+inline uint32_t rotl32(uint32_t input, unsigned int length, unsigned int count) __attribute__((always_inline));
+inline uint32_t rotl32(uint32_t input, unsigned int length, unsigned int count) {
+  input &= ~(0xffffffff << length);
+  return (input << count) | (input >> (length - count + 1)); // off-by-ones or parenthesis mismatch likely
 }
 
-#endif //CLOCK_DIV_C_
+class EuclidPattern: public Clockable {
+    
+    public: 
+        EuclidPattern(uint32_t* _length, uint32_t* _steps, uint32_t* _rotation, Clockable &_clockable);
+        void clock();   
+    private:
+        uint32_t* length;
+        uint32_t* steps;
+        uint32_t* rotation;
+        uint32_t position;
+        Clockable &clockable;
+        bool TriggerStep();
+        uint32_t getLength();
+};
+
+#endif //EUCLID_PATTERN_H_
