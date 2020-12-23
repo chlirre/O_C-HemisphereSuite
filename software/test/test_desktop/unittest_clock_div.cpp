@@ -19,36 +19,41 @@
 #include "unittest_clock_div.h"
 #include "clock_div.h"
 
-uint8_t calls = 0;
-void cb() {
-    calls++;
+class ClockListener : public Clockable {
+    public:
+        void clock() {
+            calls++;
+        };
+        uint32_t calls;        
 };
 
 void test_function_clock(void) {
     uint8_t division = 2;
-    calls = 0;
-    ClockDiv clock_div = ClockDiv(division, cb);
-    TEST_ASSERT_EQUAL(0, calls);
-    clock_div.Clock();
-    TEST_ASSERT_EQUAL(0, calls);
-    clock_div.Clock();
-    TEST_ASSERT_EQUAL(1, calls);
+    ClockListener cl = ClockListener();
+    cl.calls = 0;
+    ClockDiv clock_div = ClockDiv(division, cl);
+    TEST_ASSERT_EQUAL(0, cl.calls);
+    clock_div.clock();
+    TEST_ASSERT_EQUAL(0, cl.calls);
+    clock_div.clock();
+    TEST_ASSERT_EQUAL(1, cl.calls);
 }
 
 void test_function_change_division(void) {
     uint8_t division = 2;
-    calls = 0;
-    ClockDiv clock_div = ClockDiv(division, cb);
-    TEST_ASSERT_EQUAL(0, calls);
-    clock_div.Clock();
-    TEST_ASSERT_EQUAL(0, calls);
+    ClockListener cl = ClockListener();
+    cl.calls = 0;
+    ClockDiv clock_div = ClockDiv(division, cl);
+    TEST_ASSERT_EQUAL(0, cl.calls);
+    clock_div.clock();
+    TEST_ASSERT_EQUAL(0, cl.calls);
     division = 4;
-    clock_div.Clock();
-    TEST_ASSERT_EQUAL(0, calls);
-    clock_div.Clock();
-    TEST_ASSERT_EQUAL(0, calls);
-    clock_div.Clock();
-    TEST_ASSERT_EQUAL(1, calls);
+    clock_div.clock();
+    TEST_ASSERT_EQUAL(0, cl.calls);
+    clock_div.clock();
+    TEST_ASSERT_EQUAL(0, cl.calls);
+    clock_div.clock();
+    TEST_ASSERT_EQUAL(1, cl.calls);
 }
 
 #endif // _TEST_CLOCK_DIV_C_

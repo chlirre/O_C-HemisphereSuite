@@ -23,19 +23,18 @@
 #define CLOCK_DIV_H_
 
 #include <stdint.h>
+#include "clockable.h"
 
-typedef void (*ClockCallback)();
-
-class ClockDiv {
+class ClockDiv: public Clockable {
     
     public: 
-        ClockDiv(uint8_t &_division, ClockCallback _clock_callback);
-        void Clock();
+        ClockDiv(uint8_t &_division, Clockable &_clockable);
+        void clock();
 
     private:
         uint8_t &division;
         uint8_t counter;
-        ClockCallback clock_callback;
+        Clockable &clockable;
 };
 
 #endif //CLOCK_DIV_H_
