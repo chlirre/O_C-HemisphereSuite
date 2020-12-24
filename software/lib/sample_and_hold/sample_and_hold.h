@@ -27,13 +27,12 @@
 class SampleAndHold {
     
     public: 
-        SampleAndHold(uint32_t &_input);
-        uint32_t getValue();
+        SampleAndHold(uint32_t* _input, uint32_t* _output);
         uint32_t Sample();
 
     private:
-        uint32_t &input;
-        uint32_t value;
+        uint32_t* input;
+        uint32_t* output;
 };
 
 #endif //SAMPLE_AND_HOLD_H_

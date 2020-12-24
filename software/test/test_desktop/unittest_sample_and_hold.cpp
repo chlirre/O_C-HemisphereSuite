@@ -22,34 +22,40 @@
 
 void test_function_get_value(void) {
     uint32_t input = 0;
-    SampleAndHold sample_and_hold = SampleAndHold(input);
-    TEST_ASSERT_EQUAL(0, sample_and_hold.getValue());
+    uint32_t output = 0;
+    SampleAndHold sample_and_hold = SampleAndHold(&input, &output);
+    TEST_ASSERT_EQUAL(0, output);
 }
 
 void test_function_sample_returns_value(void) {
     uint32_t input = 0;
-    SampleAndHold sample_and_hold = SampleAndHold(input);
+    uint32_t output = 0;
+    SampleAndHold sample_and_hold = SampleAndHold(&input, &output);
     TEST_ASSERT_EQUAL(0, sample_and_hold.Sample());
+    TEST_ASSERT_EQUAL(0, output);
     input = 2;
     TEST_ASSERT_EQUAL(2, sample_and_hold.Sample());
+    TEST_ASSERT_EQUAL(2, output);
 }
 
 void test_function_get_value_same_until_sample(void) {
     uint32_t input = 0;
-    SampleAndHold sample_and_hold = SampleAndHold(input);
-    TEST_ASSERT_EQUAL(0, sample_and_hold.getValue());
+    uint32_t output = 0;
+    SampleAndHold sample_and_hold = SampleAndHold(&input, &output);
+    TEST_ASSERT_EQUAL(0, output);
     input = 1;
-    TEST_ASSERT_EQUAL(0, sample_and_hold.getValue());
+    TEST_ASSERT_EQUAL(0, output);
     input = 2;
-    TEST_ASSERT_EQUAL(0, sample_and_hold.getValue());
+    TEST_ASSERT_EQUAL(0, output);
     sample_and_hold.Sample();
-    TEST_ASSERT_EQUAL(2, sample_and_hold.getValue());
+    TEST_ASSERT_EQUAL(2, output);
 }
 
-void test_function_initial_value_is_sampled(void) {
+void test_function_initial_value_is_not_sampled(void) {
     uint32_t input = 42;
-    SampleAndHold sample_and_hold = SampleAndHold(input);
-    TEST_ASSERT_EQUAL(42, sample_and_hold.getValue());
+    uint32_t output = 0;
+    SampleAndHold sample_and_hold = SampleAndHold(&input, &output);
+    TEST_ASSERT_EQUAL(0, output);
 }
 
 #endif // _TEST_SAMPLE_AND_HOLD_C_
