@@ -16,6 +16,6 @@
 void test_function_get_value(void);
 void test_function_sample_returns_value(void);
 void test_function_get_value_same_until_sample(void);
-void test_function_initial_value_is_sampled(void);
+void test_function_initial_value_is_not_sampled(void);
 
 #endif // _TEST_SAMPLE_AND_HOLD_H_

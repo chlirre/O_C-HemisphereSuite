@@ -25,18 +25,12 @@
 #include "sample_and_hold.h"
 #include <stdint.h>
 
-SampleAndHold::SampleAndHold(uint32_t &_input) 
-: input(_input) {
-    value = _input;
-}
-    
-uint32_t SampleAndHold::SampleAndHold::getValue() {
-    return value;
-}
+SampleAndHold::SampleAndHold(uint32_t* _input, uint32_t* _output) 
+: input(_input), output(_output) {}
 
 uint32_t SampleAndHold::SampleAndHold::Sample() {
-    value = input;
-    return value;
+    *output = *input;
+    return *output;
 }
 
 #endif //SAMPLE_AND_HOLD_C_

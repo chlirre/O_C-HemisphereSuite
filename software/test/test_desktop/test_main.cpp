@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     RUN_TEST(test_function_get_value);
     RUN_TEST(test_function_sample_returns_value);
     RUN_TEST(test_function_get_value_same_until_sample);
-    RUN_TEST(test_function_initial_value_is_sampled);
+    RUN_TEST(test_function_initial_value_is_not_sampled);
 
     UNITY_END();
     return 0;
