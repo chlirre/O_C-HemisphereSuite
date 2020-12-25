@@ -25,6 +25,8 @@
 #include <stdint.h>
 #include "clockable.h"
 
+// rotate functions by John Regehr
+// see http://stackoverflow.com/questions/776508/best-practices-for-circular-shift-rotate-operations-in-c
 inline uint32_t rotl32(uint32_t input, unsigned int length, unsigned int count) __attribute__((always_inline));
 inline uint32_t rotl32(uint32_t input, unsigned int length, unsigned int count) {
   input &= ~(0xffffffff << length);
