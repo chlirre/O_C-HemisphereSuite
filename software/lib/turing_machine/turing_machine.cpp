@@ -41,12 +41,12 @@ const uint8_t MIN_PROB = 0;
 const uint8_t MAX_PROB = 100;
 
 TuringMachine::TuringMachine(
-    random_fn _random, 
-    uint16_t initial_reg, 
+    random_fn _random,
+    uint16_t* initial_reg, 
     uint8_t* _length, 
     uint8_t* _probability,
-    double* _scaledFiveBitOut,
-    double* _scaledEightBitOut
+    uint16_t* _scaledFiveBitOut,
+    uint16_t* _scaledEightBitOut
 ) : random(_random), reg(initial_reg), length(_length), probability(_probability), scaledFiveBitOut(_scaledFiveBitOut), scaledEightBitOut(_scaledEightBitOut) {
     updateOutput();
 }
@@ -74,21 +74,21 @@ uint8_t TuringMachine::TuringMachine::getProbability() {
 }
 
 void TuringMachine::TuringMachine::updateOutput() {
-    *scaledFiveBitOut = (reg & 0b0000000000011111) / 0b00011111;
-    *scaledEightBitOut = (reg & 0b0000000011111111) / 0b11111111;
+    *scaledFiveBitOut = ((*reg & 0b0000000000011111) / 0b00011111) * UINT16_MAX;
+    *scaledEightBitOut = ((*reg & 0b0000000011111111) / 0b11111111)  * UINT16_MAX;
 }
 
-void TuringMachine::TuringMachine::clock() {
+void TuringMachine::TuringMachine::trig() {
     uint8_t _length = getLength();
     uint8_t _probability = getProbability();
     // Grab the bit that's about to be shifted away
-    int last = (reg >> (_length - 1)) & 0x01;
+    int last = (*reg >> (_length - 1)) & 0x01;
 
     // Decide what the last bit should be
     if (random(0, 99) < _probability) last = 1 - last;
 
     // Shift left, then add the new last bit
-    reg = (reg << 1) + last;
+    *reg = (*reg << 1) + last;
     updateOutput();
 }
 

@@ -33,36 +33,35 @@
 #define TURING_MACHINE_H_
 
 #include <stdint.h>
-#include "clockable.h"
+#include "triggable.h"
 
 static const uint8_t DEFAULT_LENGTH = 16;
 static const uint8_t DEFAULT_PROBABILITY = 0;
 
-typedef uint32_t (*random_fn)(uint32_t min, uint32_t max);
+typedef uint16_t (*random_fn)(uint16_t min, uint16_t max);
 
-
-class TuringMachine: public Clockable {
+class TuringMachine: public Triggable {
     
     public: 
         TuringMachine(
             random_fn _random, 
-            uint16_t initial_reg, 
+            uint16_t* reg, 
             uint8_t* _length, 
             uint8_t* _probability, 
-            double* _scaledFiveBitOut,
-            double* _scaledEightBitOut
+            uint16_t* _scaledFiveBitOut,
+            uint16_t* _scaledEightBitOut
         );
-        void clock();
+        void trig();
         const uint16_t DEFAULT_LENGTH = 16;
         const uint16_t DEFAULT_PROBABILITY = 0;
 
     private:
-        uint16_t reg;
+        uint16_t* reg;
         uint8_t* length;
         uint8_t* probability;
         random_fn random;
-        double* scaledFiveBitOut;
-        double* scaledEightBitOut;
+        uint16_t* scaledFiveBitOut;
+        uint16_t* scaledEightBitOut;
         uint8_t getLength();
         uint8_t getProbability();
         void updateOutput();

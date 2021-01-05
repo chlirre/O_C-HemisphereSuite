@@ -18,12 +18,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef CLOCKABLE_H_
-#define CLOCKABLE_H_
 
-class Clockable {
-   public:
-      virtual void clock() = 0;
+#ifndef QUANTIZER_H_
+#define QUANTIZER_H_
+
+#include <stdint.h>
+#include "braids_quantizer.h"
+
+class Quantizer {
+    
+    public: 
+        Quantizer(braids::Scale scale);
+        uint32_t quantize(uint32_t _input);
+        uint32_t setScale(braids::Scale _scale);
+
+    private:
+        braids::Scale scale;
 };
 
-#endif
+#endif //QUANTIZER_H_

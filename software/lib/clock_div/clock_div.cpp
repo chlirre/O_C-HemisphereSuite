@@ -23,16 +23,16 @@
 
 #include <stdint.h>
 #include "clock_div.h"
-#include "clockable.h"
+#include "triggable.h"
 
-ClockDiv::ClockDiv(uint8_t &_division, Clockable &_clockable)
-: division(_division), clockable(_clockable) {}
+ClockDiv::ClockDiv(uint8_t &_division, Triggable &_triggable)
+: division(_division), triggable(_triggable) {}
 
-void ClockDiv::ClockDiv::clock() {
+void ClockDiv::ClockDiv::trig() {
     counter++;
     if (counter % division == 0) {
         counter = 0;
-        clockable.clock();
+        triggable.trig();
     }
 }
 

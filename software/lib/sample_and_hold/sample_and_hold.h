@@ -23,16 +23,17 @@
 #define SAMPLE_AND_HOLD_H_
 
 #include <stdint.h>
+#include "triggable.h"
 
-class SampleAndHold {
+class SampleAndHold: public Triggable {
     
     public: 
-        SampleAndHold(uint32_t* _input, uint32_t* _output);
-        uint32_t Sample();
+        SampleAndHold(uint16_t* _input, uint16_t* _output);
+        void trig();
 
     private:
-        uint32_t* input;
-        uint32_t* output;
+        uint16_t* input;
+        uint16_t* output;
 };
 
 #endif //SAMPLE_AND_HOLD_H_

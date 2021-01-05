@@ -1338,8 +1338,8 @@ const uint32_t bjorklund_patterns[] = {
 const uint16_t MAX_LENGTH = 32;
 const uint16_t MIN_LENGTH = 2;
 
-EuclidPattern::EuclidPattern(uint32_t* _length, uint32_t* _steps, uint32_t* _rotation, Clockable &_clockable) 
-: length(_length), steps(_steps), rotation(_rotation), clockable(_clockable) {
+EuclidPattern::EuclidPattern(uint32_t* _length, uint32_t* _steps, uint32_t* _rotation, Triggable &_triggable) 
+: length(_length), steps(_steps), rotation(_rotation), triggable(_triggable) {
   position = 0;
 }
 
@@ -1370,9 +1370,9 @@ bool EuclidPattern::TriggerStep() {
   return static_cast<bool>(pattern & (0x01 << _position)) ;
 }
 
-void EuclidPattern::clock() {
+void EuclidPattern::trig() {
   if (TriggerStep()) {
-    clockable.clock();
+    triggable.trig();
   };
 
   position = (position + 1) % getLength();

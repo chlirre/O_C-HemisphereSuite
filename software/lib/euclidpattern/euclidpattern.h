@@ -23,7 +23,7 @@
 #define EUCLID_PATTERN_H_
 
 #include <stdint.h>
-#include "clockable.h"
+#include "triggable.h"
 
 // rotate functions by John Regehr
 // see http://stackoverflow.com/questions/776508/best-practices-for-circular-shift-rotate-operations-in-c
@@ -33,17 +33,17 @@ inline uint32_t rotl32(uint32_t input, unsigned int length, unsigned int count) 
   return (input << count) | (input >> (length - count + 1)); // off-by-ones or parenthesis mismatch likely
 }
 
-class EuclidPattern: public Clockable {
+class EuclidPattern: public Triggable {
     
     public: 
-        EuclidPattern(uint32_t* _length, uint32_t* _steps, uint32_t* _rotation, Clockable &_clockable);
-        void clock();   
+        EuclidPattern(uint32_t* _length, uint32_t* _steps, uint32_t* _rotation, Triggable &_triggable);
+        void trig();   
     private:
         uint32_t* length;
         uint32_t* steps;
         uint32_t* rotation;
         uint32_t position;
-        Clockable &clockable;
+        Triggable &triggable;
         bool TriggerStep();
         uint32_t getLength();
 };

@@ -18,18 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#ifndef CLOCKABLE_H_
+#define CLOCKABLE_H_
 
-#ifndef SAMPLE_AND_HOLD_C_
-#define SAMPLE_AND_HOLD_C_
+class Triggable {
+   public:
+      virtual void trig() = 0;
+};
 
-#include "sample_and_hold.h"
-#include <stdint.h>
-
-SampleAndHold::SampleAndHold(uint16_t* _input, uint16_t* _output) 
-: input(_input), output(_output) {}
-
-void SampleAndHold::SampleAndHold::trig() {
-    *output = *input;
-}
-
-#endif //SAMPLE_AND_HOLD_C_
+#endif
