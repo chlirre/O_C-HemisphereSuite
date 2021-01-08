@@ -5,6 +5,9 @@
  */
 
 #include <Arduino.h>
+#include "OC_core.h"
+
+volatile uint32_t OC::CORE::ticks = 0;
 
 void setup()
 {
